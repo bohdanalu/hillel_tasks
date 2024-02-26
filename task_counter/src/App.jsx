@@ -1,19 +1,34 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import "./App.css";
 
+const initCount = 0;
+
+const reducer = (state, acction) => {
+  switch (acction.type) {
+    case "INCREMENT":
+      return state + 1;
+    case "DECREMENT":
+      return state - 1;
+    case "RESET":
+      return initCount;
+    default:
+      return state;
+  }
+};
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, dispatch] = useReducer(reducer, initCount);
 
   const handleIncrement = () => {
-    setCount((prev) => prev + 1);
+    dispatch({ type: "INCREMENT" });
   };
 
   const handleDecrement = () => {
-    setCount((prev) => prev - 1);
+    dispatch({ type: "DECREMENT" });
   };
 
   const handleReset = () => {
-    setCount(0);
+    dispatch({ type: "RESET" });
   };
   return (
     <>
